@@ -1,0 +1,17 @@
+{
+  "name": "b-datepicker",
+  "version": "0.0.0",
+  "description": "b-datepicker ========",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "bosonic-test-tools": "*",
+    "pikaday": "~1.2.0",
+    "moment": "~2.5.1"
+  },
+  "dependencies": {
+    "bosonic": "*"
+  }
+}

@@ -1,0 +1,47 @@
+<element name="b-datepicker">
+    <link href="../node_modules/pikaday/css/pikaday.css" rel="stylesheet">
+    <style>
+        
+    </style>
+    <template>
+        <input type="text" value="">
+    </template>
+    <script src="../node_modules/pikaday/pikaday.js"></script>
+    <script src="../node_modules/moment/moment.js"></script>
+    <script src="../node_modules/moment/lang/fr.js"></script>
+    <script>
+        var i18n = {
+            'fr': {
+                previousMonth: 'Mois précédent',
+                nextMonth: 'Mois suivant',
+                months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet',
+                         'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+                weekdays: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+                weekdaysShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam']
+            }
+        };
+
+        ({
+            defaultLocale: 'en',
+
+            get locale() {
+                return this.getAttribute('locale') || this.defaultLocale;
+            },
+
+            readyCallback: function() {
+                this.appendChild(this.template.content.cloneNode(true));
+                var picker = new Pikaday(this.assembleOptions());
+            },
+
+            assembleOptions: function() {
+                var options = { 
+                    field: this.querySelector('input')
+                };
+                if (this.locale !== this.defaultLocale && i18n.hasOwnProperty(this.locale)) {
+                    options.i18n = i18n[this.locale];
+                }
+                return options;
+            }
+        });
+    </script>
+</element>
