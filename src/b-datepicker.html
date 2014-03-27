@@ -6,9 +6,9 @@
     <template>
         <input type="text" value="">
     </template>
-    <script src="../node_modules/pikaday/pikaday.js"></script>
     <script src="../node_modules/moment/moment.js"></script>
     <script src="../node_modules/moment/lang/fr.js"></script>
+    <script src="../node_modules/pikaday/pikaday.js"></script>
     <script>
         var i18n = {
             'fr': {
@@ -22,25 +22,76 @@
         };
 
         ({
+            picker: null,
             defaultLocale: 'en',
+            defaultFormat: 'L',
+            defaultFirstDay: 0,
 
             get locale() {
                 return this.getAttribute('locale') || this.defaultLocale;
             },
 
+            get format() {
+                return this.getAttribute('format') || this.defaultFormat;
+            },
+
+            get firstDay() {
+                return this.getAttribute('firstday') || this.defaultFirstDay;
+            },
+
+            get minDate() {
+                return this.getAttribute('mindate');
+            },
+
+            get maxDate() {
+                return this.getAttribute('maxdate');
+            },
+
+            get yearRange() {
+                if (!this.getAttribute('yearrange')) {
+                    return null;
+                }
+                return this.getAttribute('yearrange').split(',');
+            },
+
+            getDate: function() {
+                return this.picker.getDate();
+            },
+
             readyCallback: function() {
                 this.appendChild(this.template.content.cloneNode(true));
-                var picker = new Pikaday(this.assembleOptions());
+                this.picker = new Pikaday(this.assembleOptions());
             },
 
             assembleOptions: function() {
                 var options = { 
-                    field: this.querySelector('input')
+                    field: this.querySelector('input'),
+                    format: this.format,
+                    firstDay: this.firstDay,
+                    onOpen: this.fireOpenEvent.bind(this),
+                    onSelect: this.fireSelectEvent.bind(this),
                 };
                 if (this.locale !== this.defaultLocale && i18n.hasOwnProperty(this.locale)) {
                     options.i18n = i18n[this.locale];
                 }
+                if (this.minDate) {
+                    options.minDate = this.minDate;
+                }
+                if (this.maxDate) {
+                    options.maxDate = this.maxDate;
+                }
+                if (this.yearRange) {
+                    options.yearRange = this.yearRange;
+                }
                 return options;
+            },
+
+            fireOpenEvent: function() {
+                this.dispatchEvent(new CustomEvent('b-open'));
+            },
+
+            fireSelectEvent: function() {
+                this.dispatchEvent(new CustomEvent('b-select'));
             }
         });
     </script>

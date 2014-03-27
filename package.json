@@ -1,6 +1,6 @@
 {
   "name": "b-datepicker",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "b-datepicker ========",
   "main": "Gruntfile.js",
   "scripts": {
@@ -8,10 +8,11 @@
   },
   "devDependencies": {
     "bosonic-test-tools": "*",
-    "pikaday": "~1.2.0",
-    "moment": "~2.5.1"
+    "grunt-bosonic": "*"
   },
   "dependencies": {
-    "bosonic": "*"
+    "bosonic": "*",
+    "pikaday": "~1.2.0",
+    "moment": "~2.5.1"
   }
 }
