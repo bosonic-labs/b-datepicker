@@ -34,5 +34,5 @@ Otherwise, you can download and include in your HTML file the builded CSS & JS f
 
 ### Events
 - __b-open__: will fire when the popup opens.
-- __b-select_: will fire whenever the user picks a date.
+- __b-select__: will fire whenever the user picks a date.
 
