@@ -58,7 +58,7 @@
                 return this.picker.getDate();
             },
 
-            readyCallback: function() {
+            createdCallback: function() {
                 this.appendChild(this.template.content.cloneNode(true));
                 this.picker = new Pikaday(this.assembleOptions());
             },

@@ -3418,67 +3418,112 @@
                 ]
             }
         };
-    Bosonic.registerElement('b-datepicker', {
-        picker: null,
-        defaultLocale: 'en',
-        defaultFormat: 'L',
-        defaultFirstDay: 0,
-        get locale() {
-            return this.getAttribute('locale') || this.defaultLocale;
-        },
-        get format() {
-            return this.getAttribute('format') || this.defaultFormat;
-        },
-        get firstDay() {
-            return this.getAttribute('firstday') || this.defaultFirstDay;
-        },
-        get minDate() {
-            return this.getAttribute('mindate');
-        },
-        get maxDate() {
-            return this.getAttribute('maxdate');
-        },
-        get yearRange() {
-            if (!this.getAttribute('yearrange')) {
-                return null;
+    var BDatepickerPrototype = Object.create(HTMLElement.prototype, {
+            picker: { value: null },
+            defaultLocale: { value: 'en' },
+            defaultFormat: { value: 'L' },
+            defaultFirstDay: { value: 0 },
+            locale: {
+                enumerable: true,
+                get: function () {
+                    return this.getAttribute('locale') || this.defaultLocale;
+                }
+            },
+            format: {
+                enumerable: true,
+                get: function () {
+                    return this.getAttribute('format') || this.defaultFormat;
+                }
+            },
+            firstDay: {
+                enumerable: true,
+                get: function () {
+                    return this.getAttribute('firstday') || this.defaultFirstDay;
+                }
+            },
+            minDate: {
+                enumerable: true,
+                get: function () {
+                    return this.getAttribute('mindate');
+                }
+            },
+            maxDate: {
+                enumerable: true,
+                get: function () {
+                    return this.getAttribute('maxdate');
+                }
+            },
+            yearRange: {
+                enumerable: true,
+                get: function () {
+                    if (!this.getAttribute('yearrange')) {
+                        return null;
+                    }
+                    return this.getAttribute('yearrange').split(',');
+                }
+            },
+            getDate: {
+                enumerable: true,
+                value: function () {
+                    return this.picker.getDate();
+                }
+            },
+            createdCallback: {
+                enumerable: true,
+                value: function () {
+                    this.appendChild(this.template.content.cloneNode(true));
+                    this.picker = new Pikaday(this.assembleOptions());
+                }
+            },
+            assembleOptions: {
+                enumerable: true,
+                value: function () {
+                    var options = {
+                            field: this.querySelector('input'),
+                            format: this.format,
+                            firstDay: this.firstDay,
+                            onOpen: this.fireOpenEvent.bind(this),
+                            onSelect: this.fireSelectEvent.bind(this)
+                        };
+                    if (this.locale !== this.defaultLocale && i18n.hasOwnProperty(this.locale)) {
+                        options.i18n = i18n[this.locale];
+                    }
+                    if (this.minDate) {
+                        options.minDate = this.minDate;
+                    }
+                    if (this.maxDate) {
+                        options.maxDate = this.maxDate;
+                    }
+                    if (this.yearRange) {
+                        options.yearRange = this.yearRange;
+                    }
+                    return options;
+                }
+            },
+            fireOpenEvent: {
+                enumerable: true,
+                value: function () {
+                    this.dispatchEvent(new CustomEvent('b-open'));
+                }
+            },
+            fireSelectEvent: {
+                enumerable: true,
+                value: function () {
+                    this.dispatchEvent(new CustomEvent('b-select'));
+                }
             }
-            return this.getAttribute('yearrange').split(',');
-        },
-        getDate: function () {
-            return this.picker.getDate();
-        },
-        readyCallback: function () {
-            this.appendChild(this.template.content.cloneNode(true));
-            this.picker = new Pikaday(this.assembleOptions());
-        },
-        assembleOptions: function () {
-            var options = {
-                    field: this.querySelector('input'),
-                    format: this.format,
-                    firstDay: this.firstDay,
-                    onOpen: this.fireOpenEvent.bind(this),
-                    onSelect: this.fireSelectEvent.bind(this)
-                };
-            if (this.locale !== this.defaultLocale && i18n.hasOwnProperty(this.locale)) {
-                options.i18n = i18n[this.locale];
+        });
+    window.BDatepicker = document.registerElement('b-datepicker', { prototype: BDatepickerPrototype });
+    Object.defineProperty(BDatepickerPrototype, 'template', {
+        get: function () {
+            var fragment = document.createDocumentFragment();
+            var div = fragment.appendChild(document.createElement('div'));
+            div.innerHTML = ' <input type="text" value=""> ';
+            while (child = div.firstChild) {
+                fragment.insertBefore(child, div);
             }
-            if (this.minDate) {
-                options.minDate = this.minDate;
-            }
-            if (this.maxDate) {
-                options.maxDate = this.maxDate;
-            }
-            if (this.yearRange) {
-                options.yearRange = this.yearRange;
-            }
-            return options;
-        },
-        fireOpenEvent: function () {
-            this.dispatchEvent(new CustomEvent('b-open'));
-        },
-        fireSelectEvent: function () {
-            this.dispatchEvent(new CustomEvent('b-select'));
-        },
-        template: ' <input type="text" value=""> '
+            fragment.removeChild(div);
+            return { content: fragment };
+        }
     });
 }());

@@ -1,17 +1,26 @@
 {
   "name": "b-datepicker",
-  "version": "0.1.0",
-  "description": "b-datepicker ========",
+  "version": "0.2.0",
+  "description": "A Bosonic datepicker element which uses Pikaday.",
   "main": "Gruntfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bosonic/b-datepicker.git"
+  },
+  "author": "Raphaël Rougeron <goldoraf@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bosonic/b-datepicker/issues"
+  },
   "devDependencies": {
     "bosonic-test-tools": "*",
-    "grunt-bosonic": "*"
+    "grunt-bosonic": ">=0.4.0"
   },
   "dependencies": {
-    "bosonic": "*",
+    "bosonic": ">=0.4.0",
     "pikaday": "~1.2.0",
     "moment": "~2.5.1"
   }
