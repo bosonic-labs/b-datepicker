@@ -1,7 +1,7 @@
 <element name="b-datepicker">
     <link href="../node_modules/pikaday/css/pikaday.css" rel="stylesheet">
     <style>
-        
+
     </style>
     <template>
         <input type="text" value="">
@@ -59,12 +59,14 @@
             },
 
             createdCallback: function() {
-                this.appendChild(this.template.content.cloneNode(true));
+                var inputElement = this.template.content.cloneNode(true);
+                inputElement.querySelector('input').setAttribute('name', this.getAttribute('name'));
+                this.appendChild(inputElement);
                 this.picker = new Pikaday(this.assembleOptions());
             },
 
             assembleOptions: function() {
-                var options = { 
+                var options = {
                     field: this.querySelector('input'),
                     format: this.format,
                     firstDay: this.firstDay,

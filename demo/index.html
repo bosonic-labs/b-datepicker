@@ -10,4 +10,23 @@
 <body>
     <b-datepicker locale="fr"></b-datepicker>
     <b-datepicker locale="en"></b-datepicker>
+
+    <form>
+        <label for="classicInput">classicInput</label>
+        <input type="text" id="classicInput" name="classicInput" />
+        <label for="datepicker">datepicker</label>
+        <b-datepicker id="datepicker" name="datepicker" locale="fr"></b-datepicker>
+        <button type="submit">GO</button>
+    </form>
+    <script>
+        var form = document.querySelector('form');
+        form.addEventListener('submit', handleSubmit);
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            console.log("event.target.classicInput is classically ok", event.target.classicInput.value);
+            console.log("event.target.datepicker is now defined", event.target.datepicker.value);
+        }
+
+    </script>
 </body>
