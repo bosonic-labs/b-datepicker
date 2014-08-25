@@ -8,6 +8,7 @@
     </template>
     <script src="../node_modules/moment/moment.js"></script>
     <script src="../node_modules/moment/lang/fr.js"></script>
+    <script src="../node_modules/moment/lang/de.js"></script>
     <script src="../node_modules/pikaday/pikaday.js"></script>
     <script>
         var i18n = {
@@ -22,7 +23,6 @@
         };
 
         ({
-            picker: null,
             defaultLocale: 'en',
             defaultFormat: 'L',
             defaultFirstDay: 0,
@@ -55,7 +55,7 @@
             },
 
             get placeholder() {
-                return this.getAttribute('placeholder');
+                return this.hasAttribute('placeholder') ? this.getAttribute('placeholder') : '';
             },
 
             getDate: function() {
