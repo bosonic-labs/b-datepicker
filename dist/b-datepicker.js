@@ -3462,6 +3462,12 @@
                     return this.getAttribute('yearrange').split(',');
                 }
             },
+            placeholder: {
+                enumerable: true,
+                get: function () {
+                    return this.getAttribute('placeholder');
+                }
+            },
             getDate: {
                 enumerable: true,
                 value: function () {
@@ -3473,6 +3479,7 @@
                 value: function () {
                     var inputElement = this.template.content.cloneNode(true);
                     inputElement.querySelector('input').setAttribute('name', this.getAttribute('name'));
+                    inputElement.querySelector('input').setAttribute('placeholder', this.placeholder);
                     this.appendChild(inputElement);
                     this.picker = new Pikaday(this.assembleOptions());
                 }

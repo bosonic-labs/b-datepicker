@@ -54,6 +54,10 @@
                 return this.getAttribute('yearrange').split(',');
             },
 
+            get placeholder() {
+                return this.getAttribute('placeholder');
+            },
+
             getDate: function() {
                 return this.picker.getDate();
             },
@@ -61,6 +65,7 @@
             createdCallback: function() {
                 var inputElement = this.template.content.cloneNode(true);
                 inputElement.querySelector('input').setAttribute('name', this.getAttribute('name'));
+                inputElement.querySelector('input').setAttribute('placeholder', this.placeholder);
                 this.appendChild(inputElement);
                 this.picker = new Pikaday(this.assembleOptions());
             },
