@@ -3471,7 +3471,9 @@
             createdCallback: {
                 enumerable: true,
                 value: function () {
-                    this.appendChild(this.template.content.cloneNode(true));
+                    var inputElement = this.template.content.cloneNode(true);
+                    inputElement.querySelector('input').setAttribute('name', this.getAttribute('name'));
+                    this.appendChild(inputElement);
                     this.picker = new Pikaday(this.assembleOptions());
                 }
             },

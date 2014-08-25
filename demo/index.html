@@ -8,14 +8,17 @@
     <link href="css/b-datepicker.css" rel="stylesheet">
 </head>
 <body>
+    <h2>Choisissez une date</h2>
     <b-datepicker locale="fr"></b-datepicker>
+    <h2>Pick a date</h2>
     <b-datepicker locale="en"></b-datepicker>
 
+    <h2>Sample form (check values in console)</h2>
     <form>
-        <label for="classicInput">classicInput</label>
-        <input type="text" id="classicInput" name="classicInput" />
-        <label for="datepicker">datepicker</label>
-        <b-datepicker id="datepicker" name="datepicker" locale="fr"></b-datepicker>
+        <label for="classicInput">Classic Text Input</label>
+        <input type="text" id="classicInput" name="classicInput" placeholder="Write something..." />
+        <label for="datepicker">Bosonic Date Picker</label>
+        <b-datepicker id="datepicker" name="datepicker" locale="fr" placeholder="Choose a date..."></b-datepicker>
         <button type="submit">GO</button>
     </form>
     <script>
