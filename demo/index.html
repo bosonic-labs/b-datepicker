@@ -4,21 +4,24 @@
     <title>Demo</title>
     <meta charset="utf-8">
     <script src="js/bosonic-polyfills.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.1/moment-with-locales.min.js"></script>
     <script src="js/b-datepicker.js"></script>
     <link href="css/b-datepicker.css" rel="stylesheet">
 </head>
 <body>
-    <h2>Choisissez une date</h2>
-    <b-datepicker locale="fr"></b-datepicker>
+    <h2>Choisir une date</h2>
+    <b-datepicker locale="fr" format="LLLL"></b-datepicker>
     <h2>Pick a date</h2>
     <b-datepicker locale="en"></b-datepicker>
+    <h2>当日選ぶ</h2>
+    <b-datepicker locale="ja" format="LLLL"></b-datepicker>
 
     <h2>Sample form (check values in console)</h2>
     <form>
         <label for="classicInput">Classic Text Input</label>
         <input type="text" id="classicInput" name="classicInput" placeholder="Write something..." />
         <label for="datepicker">Bosonic Date Picker</label>
-        <b-datepicker id="datepicker" name="datepicker" locale="fr" placeholder="Choose a date..."></b-datepicker>
+        <b-datepicker id="datepicker" name="datepicker" placeholder="Choose a date..."></b-datepicker>
         <button type="submit">GO</button>
     </form>
     <script>
