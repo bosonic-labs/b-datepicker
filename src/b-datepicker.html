@@ -6,23 +6,9 @@
     <template>
         <input type="text" value="">
     </template>
-    <script src="../node_modules/moment/moment.js"></script>
-    <script src="../node_modules/moment/lang/fr.js"></script>
     <script src="../node_modules/pikaday/pikaday.js"></script>
     <script>
-        var i18n = {
-            'fr': {
-                previousMonth: 'Mois précédent',
-                nextMonth: 'Mois suivant',
-                months: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet',
-                         'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
-                weekdays: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
-                weekdaysShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam']
-            }
-        };
-
         ({
-            picker: null,
             defaultLocale: 'en',
             defaultFormat: 'L',
             defaultFirstDay: 0,
@@ -54,6 +40,20 @@
                 return this.getAttribute('yearrange').split(',');
             },
 
+            get placeholder() {
+                return this.hasAttribute('placeholder') ? this.getAttribute('placeholder') : '';
+            },
+
+            get hasMoment() {
+                return typeof moment === 'function';
+            },
+
+            get localeExists() {
+                var localMoment = moment();
+                localMoment.locale(this.locale);
+                return localMoment._locale;
+            },
+
             getDate: function() {
                 return this.picker.getDate();
             },
@@ -61,6 +61,7 @@
             createdCallback: function() {
                 var inputElement = this.template.content.cloneNode(true);
                 inputElement.querySelector('input').setAttribute('name', this.getAttribute('name'));
+                inputElement.querySelector('input').setAttribute('placeholder', this.placeholder);
                 this.appendChild(inputElement);
                 this.picker = new Pikaday(this.assembleOptions());
             },
@@ -73,8 +74,17 @@
                     onOpen: this.fireOpenEvent.bind(this),
                     onSelect: this.fireSelectEvent.bind(this),
                 };
-                if (this.locale !== this.defaultLocale && i18n.hasOwnProperty(this.locale)) {
-                    options.i18n = i18n[this.locale];
+                if (this.hasMoment) {
+                    if(this.localeExists) {
+                        var localMoment = moment();
+                        localMoment.locale(this.locale);
+                        var i18n = {
+                            months: localMoment.localeData()._months,
+                            weekdays: localMoment.localeData()._weekdays,
+                            weekdaysShort: localMoment.localeData()._weekdaysShort
+                        }
+                        options.i18n = i18n;
+                    }
                 }
                 if (this.minDate) {
                     options.minDate = this.minDate;
@@ -89,10 +99,22 @@
             },
 
             fireOpenEvent: function() {
+                if(this.hasMoment) {
+                    this.previousLocale = moment.locale();
+                    if(this.localeExists) {
+                        moment.locale(this.locale);
+                    }
+                    else {
+                        moment.locale(this.defaultLocale);
+                    }
+                }
                 this.dispatchEvent(new CustomEvent('b-open'));
             },
 
             fireSelectEvent: function() {
+                if(this.hasMoment) {
+                    moment.locale(this.previousLocale);
+                }
                 this.dispatchEvent(new CustomEvent('b-select'));
             }
         });
