@@ -1,7 +1,7 @@
 {
   "name": "b-datepicker",
-  "version": "0.2.2",
-  "description": "A Bosonic datepicker element which uses Pikaday.",
+  "version": "0.2.3",
+  "description": "b-datepicker has been deprecated. Use bosonic-core-elements instead.",
   "main": "Gruntfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
